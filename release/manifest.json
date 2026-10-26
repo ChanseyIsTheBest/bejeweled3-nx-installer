@@ -3,7 +3,7 @@
   "builds": [
     {
       "edition": "Xbox Live Arcade (title 584111D6)",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "xex_sha256": "2b97e7247636e3fbb049d5021119816f9a229b75b31a9b6a651d9aa9f507c683",
       "game_files": [
         {
@@ -80,8 +80,8 @@
         }
       ],
       "nro": "bejeweled3.nro",
-      "nro_sha256": "cbf014e614a88a8208c26b0eea558ace5991aead2947a68515815b9479d72efc",
-      "nro_size": 44747871,
+      "nro_sha256": "6d1ae5bc6e73fd19c298dd197bf5ecf2b509b502e7695af8a9e13b2322584b67",
+      "nro_size": 44756063,
       "deko3d": {
         "shaders": [
           "ps_201A6AE5D85FA5C1",
