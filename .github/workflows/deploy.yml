@@ -54,7 +54,7 @@ jobs:
       - name: Assemble the site
         run: |
           mkdir _site
-          cp -r index.html app.js worker.js sw.js icons renut_shader_common.h lib wasm release _site/
+          cp -r index.html app.js worker.js pack_worker.js movie_worker.js sw.js icons renut_shader_common.h lib wasm release _site/
 
       - uses: actions/configure-pages@v5
 

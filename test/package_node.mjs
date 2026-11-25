@@ -4,6 +4,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chosenOnDisk, loadModules, root } from './node_files.mjs';
+import { compress } from './compress_node.mjs';
+import { encodeOpus } from './opus_node.mjs';
+import createXmaModule from '../wasm/xma.mjs';
+import createVc1Module from '../wasm/vc1.mjs';
+import { reencodeMovieNode } from './hevc_node.mjs';
 import { createPackage, findGames } from '../lib/installer.js';
 
 const args = process.argv.slice(2);
@@ -48,7 +53,8 @@ const result = await createPackage(chosen, release, modules, sink,
   (size) => {
     expected = size;
     console.log(`zip: ${size} bytes`);
-  }, { update });
+  }, { update, compress, audio: { xma: await createXmaModule({ print: () => {}, printErr: () => {} }), encode: encodeOpus, jobs: 8 },
+    video: { reencode: async (bytes) => reencodeMovieNode(bytes, await createVc1Module({ print: () => {}, printErr: () => {} })) } });
 fs.closeSync(fd);
 const actual = fs.statSync(output).size;
 console.log(`${output}: ${actual} bytes (${actual === expected ? 'the announced size' : `announced ${expected}`}), ` +

@@ -11,6 +11,15 @@
 | [SPIRV-Cross](https://github.com/KhronosGroup/SPIRV-Cross) (commit `22b22f56`), unmodified | `wasm/spirv_cross.*` | Apache-2.0 |
 | [libmspack](https://www.cabextract.org.uk/libmspack/) by Stuart Caie (LZX decoder) | `wasm/lzx.*`, `wasm/lzxdelta.*` | LGPL-2.1 |
 | [Emscripten](https://emscripten.org) runtime and the musl libc it links | `wasm/*.mjs`, `wasm/*.wasm` | MIT and the University of Illinois/NCSA Open Source License |
+| [rr6-nx-installer](https://github.com/ChanseyIsTheBest/rr6-nx-installer) by ChanseyIsTheBest: the LZ4 / ZXC packing (`lib/lz4b.js`, `lib/pool.js`, `pack_worker.js`, the WebAssembly builds in `wasm/src/`) | `lib/`, `pack_worker.js`, `wasm/` | GPL-3.0 |
+| [sa2-nx-ult-installer](https://github.com/ChanseyIsTheBest/sa2-nx-installer) by ChanseyIsTheBest: the asset pack's version 3 (`lib/nxpack.js`) and the stand-ins made before the pack (`lib/media.js`) | `lib/` | GPL-3.0 |
+| [sasrt-nx-installer](https://github.com/ChanseyIsTheBest/sasrt-nx-installer) by ChanseyIsTheBest, after culdcept-nx-installer: the XMA-to-Opus re-encode (`lib/xmop.js`, `lib/audio.js`, `lib/resample.js`, `test/opus_node.mjs`) and the XMA decoder's WebAssembly (`wasm/src/xma/`) | `lib/`, `test/`, `wasm/` | GPL-3.0 |
+| [FFmpeg](https://ffmpeg.org) 4.4 (the ReXGlue ports' copy): libavcodec's xmaframes decoder (WMA Pro's, with the ports' frame-by-frame XMA entry) and libavutil, built with that decoder only | `wasm/xma.*` | LGPL-2.1-or-later |
+| [nights-nx-installer](https://github.com/ChanseyIsTheBest/nights-nx-installer) by ChanseyIsTheBest, after culdcept-nx-installer: the movie's H.265 re-encode (the ASF reader and writer, the pictures the game's decoder shows, the re-encode, its worker) and the WMV3 / VC-1 decoder's WebAssembly (`wasm/src/vc1/`, here without low delay for WMV3) | `lib/asf.js`, `lib/movies.js`, `movie_worker.js`, `test/hevc_node.mjs` | GPL-3.0 |
+| [FFmpeg](https://ffmpeg.org) 4.4 (the ReXGlue ports' copy): libavcodec's WMV3 and VC-1 decoders and libavutil, configured with those decoders only | `wasm/vc1.*` | LGPL-2.1-or-later |
+| [LZ4](https://github.com/lz4/lz4) 1.10.0 by Yann Collet: `lz4.c`, `lz4.h`, `lz4hc.c`, `lz4hc.h`, unmodified | `wasm/src/lz4/`, `wasm/lz4.*` | BSD 2-Clause (`wasm/src/lz4/LICENSE`) |
+| [ZXC](https://github.com/hellobertrand/zxc) 0.15.0 by Bertrand Lebonnois: its library, unmodified but for `zxc_driver.c` left out | `wasm/src/zxc/`, `wasm/zxc.*` | BSD 3-Clause (`wasm/src/zxc/LICENSE`) |
+| [rapidhash](https://github.com/Nicoshev/rapidhash) by Nicolas De Carli, bundled with ZXC | `wasm/src/zxc/src/lib/vendors/rapidhash.h`, `wasm/zxc.*` | MIT (`wasm/src/zxc/THIRD_PARTY_NOTICES`) |
 
 `wasm/lzx.*` is built from the futari-nx repository with its `shaders/wasm/build_wasm_tools.sh` (Emscripten 6.0.11).
 `wasm/lzxdelta.*` is built with `wasm/src/lzx/build_wasm_lzxdelta.sh` (the same options) from

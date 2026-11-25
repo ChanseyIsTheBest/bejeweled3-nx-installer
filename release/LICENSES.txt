@@ -13,6 +13,10 @@ It contains code from these projects and libraries, under their own licenses (fu
   masseffect-nx, by NebadasSwifty (the native renderer it grew from) ... GPL-3.0
   banjo-nx, by ChanseyIsTheBest (Renut's Switch port: plume's deko3d
     back end, the shader generator, the render-thread work) ............ GPL-3.0 (as part of this port)
+  the ultimate base (renut-ultimate) and rr6-nx, by ChanseyIsTheBest
+    (the game menu, the LZ4 / ZXC and Opus file readers) ............... GPL-3.0, BSD-3-Clause (SDK parts)
+  nights-nx and culdcept-nx, by ChanseyIsTheBest (the movie hooks and
+    nxvideo, the H.265 movies on NVDEC) ................................ GPL-3.0
   reNut, by masterspike52 (Renut's Direct3D-level renderer) ............ reuse permitted by its author
   plume, by renderbag and contributors (the rendering layer) ........... MIT
   deko3d, by fincs (the Switch graphics API) ........................... zlib License
@@ -23,6 +27,12 @@ It contains code from these projects and libraries, under their own licenses (fu
     the Xenia project contributors) .................................... BSD-3-Clause
   Mesa (the shader compiler code uam imports) .......................... MIT
   FFmpeg (libavcodec, libavutil) ....................................... LGPL-2.1-or-later
+  FFmpeg 7.1 as devkitPro's switch-ffmpeg builds it, with averne's
+    nvtegra backend (the H.265 movies' decoder) ........................ GPL (built with --enable-gpl)
+  libopus 1.3, as devkitPro's switch-libopus builds it (the sounds) .... BSD-3-Clause
+  LZ4 1.10.0 (lib), by Yann Collet (the packed game files) ............. BSD-2-Clause
+  ZXC 0.15.0, by Bertrand Lebonnois (the packed game files), with
+    rapidhash by Nicolas De Carli ...................................... BSD-3-Clause; MIT
   libmspack, by Stuart Caie ............................................ LGPL-2.1
   glslang .............................................................. BSD-3-Clause and others
   SPIRV-Headers ........................................................ MIT (Khronos)
@@ -30,6 +40,9 @@ It contains code from these projects and libraries, under their own licenses (fu
   fmt .................................................................. MIT
   spdlog ............................................................... MIT
   Dear ImGui ........................................................... MIT
+  The game menu's fonts (Dear ImGui's misc/fonts): Cousine by Steve
+    Matteson, Karla by Jonathan Pinhorn; Roboto by Christian Robertson;
+    ProggyTiny by Tristan Grimmer ...................................... OFL-1.1; Apache-2.0; MIT
   Vulkan Memory Allocator .............................................. MIT
   SIMDe ................................................................ MIT
   toml++ ............................................................... MIT
@@ -42,7 +55,9 @@ It contains code from these projects and libraries, under their own licenses (fu
   Zstandard ............................................................ BSD-3-Clause
   Expat ................................................................ MIT
 
-FFmpeg and libmspack are covered by the GNU Lesser General Public License, version 2.1. Their source code, including
+FFmpeg (the copy in the SDK) and libmspack are covered by the GNU Lesser General Public License, version 2.1; the
+Switch build of FFmpeg that decodes the H.265 movies is configured with --enable-gpl and is covered by the GPL.
+Their source code, including
 the files changed for this port, and everything needed to rebuild bejeweled3.nro and relink it with modified versions of
 those libraries, are available at https://github.com/ChanseyIsTheBest/bejeweled3-nx (see THIRD_PARTY_NOTICES.md and
 docs/building.md there). FFmpeg is https://ffmpeg.org; libmspack is https://www.cabextract.org.uk/libmspack/.
@@ -2699,3 +2714,270 @@ SOFTWARE.
 For more precise licensing information, check out the header of each source
 code file in the mesa-imported/ directory, or visit this website:
     https://www.mesa3d.org/license.html
+
+====================================================================================================================
+libopus (BSD-3-Clause)
+====================================================================================================================
+
+Copyright 2001-2011 Xiph.Org, Skype Limited, Octasic,
+                    Jean-Marc Valin, Timothy B. Terriberry,
+                    CSIRO, Gregory Maxwell, Mark Borgerding,
+                    Erik de Castro Lopo
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+- Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+- Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+- Neither the name of Internet Society, IETF or IETF Trust, nor the
+names of specific contributors, may be used to endorse or promote
+products derived from this software without specific prior written
+permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Opus is subject to the royalty-free patent licenses which are
+specified at:
+
+Xiph.Org Foundation:
+https://datatracker.ietf.org/ipr/1524/
+
+Microsoft Corporation:
+https://datatracker.ietf.org/ipr/1914/
+
+Broadcom Corporation:
+https://datatracker.ietf.org/ipr/1526/
+
+====================================================================================================================
+LZ4 (BSD-2-Clause: the files of its lib directory, which is all this build uses)
+====================================================================================================================
+
+This repository uses 2 different licenses :
+- all files in the `lib` directory use a BSD 2-Clause license
+- all other files use a GPL-2.0-or-later license, unless explicitly stated otherwise
+
+Relevant license is reminded at the top of each source file,
+and with presence of COPYING or LICENSE file in associated directories.
+
+This model is selected to emphasize that
+files in the `lib` directory are designed to be included into 3rd party applications,
+while all other files, in `programs`, `tests` or `examples`,
+are intended to be used "as is", as part of their intended scenarios,
+with no intention to support 3rd party integration use cases.
+
+LZ4 - Fast LZ compression algorithm
+Copyright (C) 2011-2023, Yann Collet.
+
+BSD 2-Clause License (http://www.opensource.org/licenses/bsd-license.php)
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You can contact the author at :
+ - LZ4 homepage : http://www.lz4.org
+ - LZ4 source repository : https://github.com/lz4/lz4
+
+====================================================================================================================
+ZXC (BSD-3-Clause), with rapidhash (MIT)
+====================================================================================================================
+
+BSD 3-Clause License
+
+Copyright (c) 2025, Bertrand Lebonnois and contributors
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of ZXC nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Third-party notices for ZXC
+===========================
+
+ZXC itself is licensed under the BSD 3-Clause License (see LICENSE).
+The components below are bundled with it under their own licenses.
+
+==============================================================================
+rapidhash
+Copyright (C) 2025 Nicolas De Carli
+License: MIT (Expat)
+Source: src/lib/vendors/rapidhash.h
+==============================================================================
+
+rapidhash - Very fast, high quality, platform-independent hashing algorithm.
+Copyright (C) 2025 Nicolas De Carli
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+You can contact the author at:
+  - rapidhash source repository: https://github.com/Nicoshev/rapidhash
+
+====================================================================================================================
+The game menu's fonts (Dear ImGui's misc/fonts, embedded in the NRO)
+====================================================================================================================
+
+Cousine-Regular.ttf, by Steve Matteson: Digitized data copyright (c) 2010 Google Corporation. Licensed under the
+SIL Open Font License, Version 1.1.
+Karla-Regular.ttf: Copyright (c) 2011, Jonathan Pinhorn (pinhorn.typedesign@gmail.com), with Reserved Font Names
+"Karla" and "Karla Tamil". This Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+SIL OPEN FONT LICENSE
+
+Version 1.1 - 26 February 2007
+
+PREAMBLE
+
+The goals of the Open Font License (OFL) are to stimulate worldwide development of collaborative font projects, to
+support the font creation efforts of academic and linguistic communities, and to provide a free and open framework
+in which fonts may be shared and improved in partnership with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and redistributed freely as long as they are not
+sold by themselves. The fonts, including any derivative works, can be bundled, embedded, redistributed and/or sold
+with any software provided that any reserved names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The requirement for fonts to remain under this license
+does not apply to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+
+"Font Software" refers to the set of files released by the Copyright Holder(s) under this license and clearly marked
+as such. This may include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting, or substituting — in part or in whole — any
+of the components of the Original Version, by changing formats or by porting the Font Software to a new environment.
+
+"Author" refers to any designer, engineer, programmer, technical writer or other person who contributed to the Font
+Software.
+
+PERMISSION & CONDITIONS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of the Font Software, to use, study,
+copy, merge, embed, modify, redistribute, and sell modified and unmodified copies of the Font Software, subject to
+the following conditions:
+
+1) Neither the Font Software nor any of its individual components, in Original or Modified Versions, may be sold by
+itself.
+
+2) Original or Modified Versions of the Font Software may be bundled, redistributed and/or sold with any software,
+provided that each copy contains the above copyright notice and this license. These can be included either as stand-
+alone text files, human-readable headers or in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font Name(s) unless explicit written permission is
+granted by the corresponding Copyright Holder. This restriction only applies to the primary font name as presented
+to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font Software shall not be used to promote,
+endorse or advertise any Modified Version, except to acknowledge the contribution(s) of the Copyright Holder(s) and
+the Author(s) or with their explicit written permission.
+
+5) The Font Software, modified or unmodified, in part or in whole, must be distributed entirely under this license,
+and must not be distributed under any other license. The requirement for fonts to remain under this license does not
+apply to any document created using the Font Software.
+
+TERMINATION
+
+This license becomes null and void if any of the above conditions are not met.
+
+DISCLAIMER
+
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT,
+TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER
+DEALINGS IN THE FONT SOFTWARE.
+
+Roboto-Medium.ttf, by Christian Robertson: Copyright 2011 Google Inc. All Rights Reserved. Licensed under the Apache
+License, Version 2.0 (its full text is above).
+
+ProggyTiny.ttf, by Tristan Grimmer (http://www.proggyfonts.net/): MIT License
+
+Copyright (c) 2004, 2005 Tristan Grimmer
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

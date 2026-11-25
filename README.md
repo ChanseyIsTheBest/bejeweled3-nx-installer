@@ -25,7 +25,12 @@ your browser: the game files never leave your computer.
    `lib/deko3d_package.js`). The package must match the manifest's SHA-256: it is the one the release was tested with.
    The game's other 18 shaders are not stored in any of its files (it compiles them while it runs with the Xbox's
    effect compiler, which a browser cannot run), so the NRO carries them.
-5. **Writes the game pack** (`game_root.nxpack` + `.nxidx`, `lib/nxpack.js`) from the game's files.
+5. **Writes the game pack** (`game_root.nxpack` + `.nxidx`, `lib/nxpack.js`) from the game's files. Each file is
+   stored compressed (LZ4 for the archives the loading screens read, ZXC for the rest: `lib/lz4b.js`, with `wasm/lz4`
+   and `wasm/zxc` on worker threads, `pack_worker.js`), and the game's XMA sounds are re-encoded as Opus by the
+   browser's own encoder (WebCodecs: `lib/xma_sounds.js`, `lib/audio.js`, `wasm/xma`) where that is smaller, and the
+   movie's WMV video as H.265 (`lib/movies.js`, `movie_worker.js`, `wasm/vc1`), frame for frame in the same file. A
+   browser without an Opus or H.265 encoder keeps the XMA sounds or the WMV video.
 6. **Streams the zip to disk** through the service worker, so nothing large has to fit in memory.
 
 The zip holds `bejeweled3-nx/bejeweled3.nro` with its `LICENSES.txt`, `deko3d_glsl.bin` and `game_root.nxpack` +
